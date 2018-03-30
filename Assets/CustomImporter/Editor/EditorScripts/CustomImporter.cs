@@ -142,8 +142,5 @@ namespace CustomImporter
 			_b_debug = _CILinks._b_debug;
 		}/*SetLinks*/
 
-
-		//TODO make a system to remove the correct line of userData input.Split(new[] {"\r\n", "\r", "\n"}, StringSplitOptions.None)
-
 	}/*CustomImporter*/
 }
