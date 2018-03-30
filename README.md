@@ -18,4 +18,4 @@ they have a specific Preset (some example are in "CustomImporter/Presets").
 When an asset is imported it will check the rules one by one and the first valid one will apply it's Preset.
 You can reorder the rules by priority using the context menu function "Sort By Priority".
 
-The rule settings objects as to be linked to the asset importer via "CustomImporterLinks".
+The rule settings objects has to be linked to the asset importer via "CustomImporterLinks".
