@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using UnityEditor.Presets;
 
@@ -12,10 +10,15 @@ namespace CustomImporter
 	/// </summary>
 	public class CustomImporter : AssetPostprocessor
 	{
+		//ScriptableObjects used to have a link between the assetpostprocessor
+		//and the differents importer settings
 		private CILinks _CILinks;
 
-		//Active texture importer settings, if null importer will be set to Unity default
-		private CISettingsTexture _CISettings_textures;
+		//Active importers settings, if null importer will be set to Unity default
+		private CISettingsTexture _CISettings_texture;
+		private CISettingsModel _CISettings_model;
+		private CISettingsAudio _CISettings_audio;
+
 
 		//Debug on/off
 		private bool _b_debug = false;
@@ -34,20 +37,49 @@ namespace CustomImporter
 
 
 		/// <summary>
-		/// Function to set textures importer settings
+		/// Function to set texture importer settings
 		/// </summary>
 		private void OnPreprocessTexture()
 		{
 			//Loading linked information
 			SetLinks();
+			OnPreProcessAsset(assetImporter, _CISettings_texture);
+		}/*OnPreprocessTexture*/
 
+
+		/// <summary>
+		/// Function to set model importer settings
+		/// </summary>
+		private void OnPreprocessModel()
+		{
+			//Loading linked information
+			SetLinks();
+			OnPreProcessAsset(assetImporter, _CISettings_model);
+		}/*OnPreprocessTexture*/
+
+
+		/// <summary>
+		/// Function to set audio importer settings
+		/// </summary>
+		private void OnPreprocessAudio()
+		{
+			//Loading linked information
+			SetLinks();
+			OnPreProcessAsset(assetImporter, _CISettings_audio);
+		}/*OnPreprocessTexture*/
+
+
+		private void OnPreProcessAsset<T> (AssetImporter importer, CISettingsGeneric<T> settings)
+			where T : CIGenericRule
+		{
 			if(_b_debug)
 			{
-				Debug.LogFormat("CustomImporter active : {0}", _CISettings_textures != null);
+				Debug.LogFormat("CustomImporter active : {0} with type {1}",
+					settings != null, typeof(T).ToString());
 			}
 
 			//If there are no settings sets we don't change anything (let the default stuff happen)
-			if(_CISettings_textures != null)
+			if(settings != null)
 			{
 				bool usesPreset = assetImporter.userData.Contains(_s_prefix);
 				bool isDiffering = assetImporter.userData.Contains(_s_differing);
@@ -73,7 +105,7 @@ namespace CustomImporter
 						}
 					}
 
-					Preset preset = _CISettings_textures.GetPresetByName(settings_used);
+					Preset preset = settings.GetPresetByName(settings_used);
 					if(preset != null)
 					{
 						if(_b_debug)
@@ -83,7 +115,7 @@ namespace CustomImporter
 
 						//if different, set customized_after_import
 						//else remove customized_after_import if necessary
-						Preset dummy = new Preset(assetImporter as TextureImporter);
+						Preset dummy = new Preset(assetImporter);
 						if(dummy.Equals(preset) && isDiffering)
 						{
 							if(_b_debug)
@@ -114,7 +146,7 @@ namespace CustomImporter
 					{
 						Debug.Log("First time import or never used a preset");
 					}
-					Preset preset = _CISettings_textures.GetTexturePresetByRule(assetPath, assetImporter as TextureImporter);
+					Preset preset = settings.GetPresetByRule(assetPath, assetImporter);
 					//We found a preset -> apply it
 					if(preset != null)
 					{
@@ -132,13 +164,15 @@ namespace CustomImporter
 					//We didn't found anything, let Unity deal with it.
 				}
 			}
-		}/*OnPreprocessTexture*/
+		}
 
 
 		private void SetLinks()
 		{
 			_CILinks = AssetDatabase.LoadAssetAtPath<CILinks>("Assets/CustomImporter/CustomImporterLinks.asset");
-			_CISettings_textures = _CILinks._SCO_settings;
+			_CISettings_texture = _CILinks._CISettings_texture;
+			_CISettings_model = _CILinks._CISettings_model;
+			_CISettings_audio = _CILinks._CISettings_audio;
 			_b_debug = _CILinks._b_debug;
 		}/*SetLinks*/
 

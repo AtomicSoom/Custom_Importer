@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor.Presets;
 
 
@@ -52,4 +50,24 @@ namespace CustomImporter
 	{
 		//TODO check how to get metadata info of the file to add filter like size
 	}/*CITextureRule*/
+
+
+	/// <summary>
+	/// Rules for a specified Preset of model importer
+	/// </summary>
+	[System.Serializable]
+	public class CIModelRule : CIGenericRule
+	{
+		//TODO check how to get metadata info of the file
+	}/*CIModelRule*/
+
+
+	/// <summary>
+	/// Rules for a specified Preset of audio importer
+	/// </summary>
+	[System.Serializable]
+	public class CIAudioRule : CIGenericRule
+	{
+		//TODO check how to get metadata info of the file
+	}/*CIAudioRule*/
 }

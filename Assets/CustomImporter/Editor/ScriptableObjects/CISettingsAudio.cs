@@ -8,12 +8,12 @@ namespace CustomImporter
 	/// <summary>
 	/// ScriptableObject to store a set of importer rules
 	/// </summary>
-	[CreateAssetMenu(fileName = "New Importer Texture Settings", menuName = "CustomImporter : Texture Settings", order = 9001)]
+	[CreateAssetMenu(fileName = "New Importer Audio Settings", menuName = "CustomImporter : Audio Settings", order = 9003)]
 	[System.Serializable]
-	public class CISettingsTexture : CISettingsGeneric<CITextureRule>
+	public class CISettingsAudio : CISettingsGeneric<CIAudioRule>
 	{
 		/// <summary>
-		/// Gets the first texture importer preset with valid rules
+		/// Gets the first audio importer preset with valid rules
 		/// Default for the importer is returned if none is valid
 		/// </summary>
 		/// <param name="complete_path"></param>
@@ -33,8 +33,8 @@ namespace CustomImporter
 				}
 			}
 
-			return Preset.GetDefaultForObject(importer as TextureImporter);
-		}/*GetPresetByPath*/
+			return Preset.GetDefaultForObject(importer as AudioImporter);
+		}/*GetPresetByRule*/
 
 	}/*CISettingsTexture*/
 }
