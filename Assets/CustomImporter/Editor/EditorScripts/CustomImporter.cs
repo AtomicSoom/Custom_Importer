@@ -39,7 +39,7 @@ namespace CustomImporter
 		private void OnPreprocessTexture()
 		{
 			//Loading linked information
-			Set_links();
+			SetLinks();
 
 			if(_b_debug)
 			{
@@ -135,12 +135,12 @@ namespace CustomImporter
 		}/*OnPreprocessTexture*/
 
 
-		private void Set_links()
+		private void SetLinks()
 		{
 			_CILinks = AssetDatabase.LoadAssetAtPath<CILinks>("Assets/CustomImporter/CustomImporterLinks.asset");
 			_CISettings_textures = _CILinks._SCO_settings;
 			_b_debug = _CILinks._b_debug;
-		}/*Set_links*/
+		}/*SetLinks*/
 
 
 		//TODO make a system to remove the correct line of userData input.Split(new[] {"\r\n", "\r", "\n"}, StringSplitOptions.None)
