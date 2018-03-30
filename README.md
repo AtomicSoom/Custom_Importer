@@ -7,6 +7,8 @@ Disclaimer : This is still a work in progress
 
 Works with Unity 2018.1b12
 
+Find UnityPackages here : https://github.com/AtomicSoom/Custom_Importer/releases
+
 Instructions :
 
 You can create rule settings via the "Create" menu.
