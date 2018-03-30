@@ -5,6 +5,8 @@ Custom importer based on Preset system for Unity
 
 Disclaimer : This is still a work in progress
 
+Works with Unity 2018.1b12
+
 Instructions :
 
 You can create rule settings via the "Create" menu.
