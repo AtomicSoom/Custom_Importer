@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee7bb5ff4066855499a065f0b311e9a1, type: 3}
+  m_Name: DefaultTextureSettings
+  m_EditorClassIdentifier: 
+  _L_rules:
+  - _Preset: {fileID: 2655988077585873504, guid: 2485721f836ef4e4bb387010e1728315,
+      type: 2}
+    _i_priority: 2
+    _s_test_name: 
+    _b_name_contains: 0
+    _b_name_exact: 0
+    _s_test_path: Sprites
+    _b_path_contains: 1
+    _b_path_exact: 0
+  - _Preset: {fileID: 2655988077585873504, guid: c43c1a076966dae489f4e9ce2717f65e,
+      type: 2}
+    _i_priority: 1
+    _s_test_name: Normal
+    _b_name_contains: 1
+    _b_name_exact: 0
+    _s_test_path: 
+    _b_path_contains: 0
+    _b_path_exact: 0
+  - _Preset: {fileID: 2655988077585873504, guid: 9baef84642a90ad4ea3e869f72058cc1,
+      type: 2}
+    _i_priority: 1
+    _s_test_name: 
+    _b_name_contains: 0
+    _b_name_exact: 0
+    _s_test_path: Textures
+    _b_path_contains: 1
+    _b_path_exact: 0
