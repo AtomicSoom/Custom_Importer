@@ -33,3 +33,15 @@ This is a package to expand the default importer preset Unity uses to add filter
 * To link a set of rules to the AssetPostProcessor you assign it in "CustomImporterLinks"
 	which contains a slot for each asset importer type.
 	The presets will be applied automatically on import.
+
+
+
+* Each assets saves it's conditions, they keep their links to the preset and keeps track if it differs from it or not.
+	This is not used at the time except that an already imported assets won't be forced to the preset on each reimport.
+	
+	
+## TODO :
+
+	* Add tests based on specific types (like texture size)
+	* Add functions to reapply presets to all assets, choosing to force for all or only assets unmodified from preset.
+	* Make a better interface
