@@ -29,6 +29,11 @@ Find UnityPackages [in releases section!](https://github.com/AtomicSoom/Custom_I
 	it will reorder the list from the highest priority to the lowest.
 	
 	![Creation](Images/rules.png)
+	
+	To set a rule you add an element to the list,
+	set the associated preset and priority,
+	set the wanted tests to ON and fill in the text to check.
+	If multiple tests are selected they are combine by "AND".
 
 
 
