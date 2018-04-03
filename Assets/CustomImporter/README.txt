@@ -14,12 +14,21 @@ This is a package to expand the default importer preset Unity uses to add filter
 	To create a set of rules you go to the "Create" menu of the project view
 	and select the type you want
 
+
+
 * Each rule is associated with a preset you choose.
 	(currently rules include asset name tests and path tests)
 	When an asset is imported the rules will be tested one by one
 	and the first valid will apply it's settings.
 	You can reorder the rules using the button "Sort by priority",
 	it will reorder the list from the highest priority to the lowest.
+
+	To set a rule you add an element to the list,
+	set the associated preset and priority,
+	set the wanted tests to ON and fill in the text to check.
+	If multiple tests are selected they are combine by "AND".
+
+
 
 * To link a set of rules to the AssetPostProcessor you assign it in "CustomImporterLinks"
 	which contains a slot for each asset importer type.
