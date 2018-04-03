@@ -15,7 +15,10 @@ Find UnityPackages [in releases section!](https://github.com/AtomicSoom/Custom_I
 	(currently working with textures, audio and models).
 	To create a set of rules you go to the "Create" menu of the project view
 	and select the type you want.
+	
 	![Creation](Images/create.png)
+
+
 
 
 * Each rule is associated with a preset you choose.
@@ -24,10 +27,14 @@ Find UnityPackages [in releases section!](https://github.com/AtomicSoom/Custom_I
 	and the first valid will apply it's settings.
 	You can reorder the rules using the button "Sort by priority",
 	it will reorder the list from the highest priority to the lowest.
+	
 	![Creation](Images/rules.png)
+
+
 
 
 * To link a set of rules to the AssetPostProcessor you assign it in "CustomImporterLinks"
 	which contains a slot for each asset importer type.
 	The presets will be applied automatically on import.
+	
 	![Creation](Images/links.png)
