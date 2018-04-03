@@ -43,3 +43,15 @@ Find UnityPackages [in releases section!](https://github.com/AtomicSoom/Custom_I
 	The presets will be applied automatically on import.
 	
 	![Creation](Images/links.png)
+	
+	
+	
+* Each assets saves it's conditions, they keep their links to the preset and keeps track if it differs from it or not.
+	This is not used at the time except that an already imported assets won't be forced to the preset on each reimport.
+	
+	
+## TODO :
+
+	* Add tests based on specific types (like texture size)
+	* Add functions to reapply presets to all assets, choosing to force for all or only assets unmodified from preset.
+	* Make a better interface
