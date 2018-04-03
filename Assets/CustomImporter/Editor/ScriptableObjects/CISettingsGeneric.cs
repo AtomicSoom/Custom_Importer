@@ -95,4 +95,34 @@ namespace CustomImporter
 		}/*SortByPriority*/
 
 	}/*CISettingsGeneric*/
+
+
+	/// <summary>
+	/// Custom Inspector to make a button to call the sorting function
+	/// </summary>
+	[CustomEditor(typeof(CIMenuItems))]
+	public class CIMenuItemsEditor : Editor
+	{
+		public override void OnInspectorGUI()
+		{
+			if (GUILayout.Button("Sort by priority"))
+			{
+				CIMenuItems script = target as CIMenuItems;
+				script.SortByPriority(script);
+			}
+			DrawDefaultInspector();
+		}/*OnInspectorGUI*/
+
+	}/*CIMenuItemsEditor*/
+
+
+	[CustomEditor(typeof(CISettingsGeneric<CIGenericRule>))]
+	public class CISettingsGengericEditor : CIMenuItemsEditor
+	{
+		public override void OnInspectorGUI()
+		{
+			base.OnInspectorGUI();
+		}/*OnInspectorGUI*/
+
+	}/*CISettingsGengericEditor*/
 }

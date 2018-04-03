@@ -37,4 +37,15 @@ namespace CustomImporter
 		}/*GetPresetByPath*/
 
 	}/*CISettingsTexture*/
+
+
+	[CustomEditor(typeof(CISettingsTexture))]
+	public class CISettingsTextureEditor : CIMenuItemsEditor
+	{
+		public override void OnInspectorGUI()
+		{
+			base.OnInspectorGUI();
+		}/*OnInspectorGUI*/
+
+	}/*CISettingsTextureEditor*/
 }

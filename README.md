@@ -1,21 +1,31 @@
 # Custom_Importer
 - Made by Atomic Digital Design
 
-Custom importer based on Preset system for Unity
+This is a package to expand the default importer preset Unity uses to add filtering options
 
-Disclaimer : This is still a work in progress
+##Disclaimer : This is still a work in progress
+##Works with Unity 2018.1b12
 
-Works with Unity 2018.1b12
+Find UnityPackages [in releases section!](https://github.com/AtomicSoom/Custom_Importer/releases)
 
-Find UnityPackages here : https://github.com/AtomicSoom/Custom_Importer/releases
 
-Instructions :
+##Instructions :
 
-You can create rule settings via the "Create" menu.
+* The custom importer works via a set of rules for each type of importers
+	(currently working with textures, audio and models).
+	To create a set of rules you go to the "Create" menu of the project view
+	and select the type you want.
+	![Creation](Images/create.png)
 
-Each type settings can have multiple rule,
-they have a specific Preset (some example are in "CustomImporter/Presets").
-When an asset is imported it will check the rules one by one and the first valid one will apply it's Preset.
-You can reorder the rules by priority using the context menu function "Sort By Priority".
+* Each rule is associated with a preset you choose.
+	(currently rules include asset name tests and path tests)
+	When an asset is imported the rules will be tested one by one
+	and the first valid will apply it's settings.
+	You can reorder the rules using the button "Sort by priority",
+	it will reorder the list from the highest priority to the lowest.
+	![Creation](Images/rules.png)
 
-The rule settings objects as to be linked to the asset importer via "CustomImporterLinks".
+* To link a set of rules to the AssetPostProcessor you assign it in "CustomImporterLinks"
+	which contains a slot for each asset importer type.
+	The presets will be applied automatically on import.
+	![Creation](Images/links.png)

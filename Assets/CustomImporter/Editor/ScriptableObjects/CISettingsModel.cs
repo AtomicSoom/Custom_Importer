@@ -36,5 +36,16 @@ namespace CustomImporter
 			return Preset.GetDefaultForObject(importer as ModelImporter);
 		}/*GetPresetByRule*/
 
-	}/*CISettingsTexture*/
+	}/*CISettingsModel*/
+
+
+	[CustomEditor(typeof(CISettingsModel))]
+	public class CISettingsModelEditor : CIMenuItemsEditor
+	{
+		public override void OnInspectorGUI()
+		{
+			base.OnInspectorGUI();
+		}/*OnInspectorGUI*/
+
+	}/*CISettingsModelEditor*/
 }

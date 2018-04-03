@@ -36,5 +36,16 @@ namespace CustomImporter
 			return Preset.GetDefaultForObject(importer as AudioImporter);
 		}/*GetPresetByRule*/
 
-	}/*CISettingsTexture*/
+	}/*CISettingsAudio*/
+
+
+	[CustomEditor(typeof(CISettingsAudio))]
+	public class CISettingsAudioEditor : CIMenuItemsEditor
+	{
+		public override void OnInspectorGUI()
+		{
+			base.OnInspectorGUI();
+		}/*OnInspectorGUI*/
+
+	}/*CISettingsAudioEditor*/
 }
