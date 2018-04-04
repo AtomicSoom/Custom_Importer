@@ -40,7 +40,7 @@ namespace CustomImporter
 
 
 	[CustomEditor(typeof(CISettingsAudio))]
-	public class CISettingsAudioEditor : CIMenuItemsEditor
+	public class CISettingsAudioEditor : CISettingsGenericEditor
 	{
 		public override void OnInspectorGUI()
 		{

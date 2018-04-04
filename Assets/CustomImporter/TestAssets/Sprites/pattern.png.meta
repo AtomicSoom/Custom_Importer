@@ -117,7 +117,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 71e1212963e1a72439aa7696cd3fa547
+    spriteID: 5930a05506a03224d947bcb866d9a138
     vertices: []
     indices: 
     edges: []
@@ -133,6 +133,6 @@ TextureImporter:
 
     CustomImporter used
 
-    SpriteTexture'
+    Default'
   assetBundleName: 
   assetBundleVariant: 

@@ -40,7 +40,7 @@ namespace CustomImporter
 
 
 	[CustomEditor(typeof(CISettingsTexture))]
-	public class CISettingsTextureEditor : CIMenuItemsEditor
+	public class CISettingsTextureEditor : CISettingsGenericEditor
 	{
 		public override void OnInspectorGUI()
 		{

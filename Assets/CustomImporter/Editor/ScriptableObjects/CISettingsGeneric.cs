@@ -29,6 +29,13 @@ namespace CustomImporter
 		/// <param name="mother"></param>
 		public abstract void SortByPriority(CIMenuItems mother);
 
+		/// <summary>
+		/// abstract function to apply the currently set preset to non-differing linked assets
+		/// the boolean "force" is used to force apply to all linked assets
+		/// </summary>
+		/// <param name="force"></param>
+		public abstract void ApplyNewPresets(bool force);
+
 	}/*CIMenuItems*/
 
 
@@ -42,17 +49,40 @@ namespace CustomImporter
 		protected List<T> _L_rules = new List<T>();
 		public List<T> RULES { get { return _L_rules; } }
 
-
 		/// <summary>
-		/// Gets a texture importer preset from a name (name of the preset file)
+		/// Gets an importer preset from a name (name of the preset file)
 		/// </summary>
 		/// <param name="name"></param>
 		/// <returns></returns>
 		public virtual Preset GetPresetByName(string name)
 		{
 			CIGenericRule importer = _L_rules.Find(x => x.PRESET.name == name);
-			return importer == null ? null : importer.PRESET;
+			return importer?.PRESET;
 		}/*GetPresetByName*/
+
+
+		/// <summary>
+		/// Get an importer preset from the rule label
+		/// </summary>
+		/// <param name="label"></param>
+		/// <returns></returns>
+		public virtual Preset GetPresetByRuleLabel(string label)
+		{
+			CIGenericRule importer = _L_rules.Find(x => x.LABEL == name);
+			return importer?.PRESET;
+		}/*GetPresetByRuleLabel*/
+
+
+		/// <summary>
+		/// Get the rule label from the preset used
+		/// </summary>
+		/// <param name="preset"></param>
+		/// <returns></returns>
+		public virtual string GetRuleLabelFromPreset(Preset preset)
+		{
+			CIGenericRule importer = _L_rules.Find(x => x.PRESET == preset);
+			return importer?.LABEL;
+		}/*GetRuleLabelFromPreset*/
 
 
 		/// <summary>
@@ -94,6 +124,12 @@ namespace CustomImporter
 			});
 		}/*SortByPriority*/
 
+
+		public override void ApplyNewPresets(bool force)
+		{
+			//TODO
+		}/*ApplyNewPresets*/
+
 	}/*CISettingsGeneric*/
 
 
@@ -110,19 +146,28 @@ namespace CustomImporter
 				CIMenuItems script = target as CIMenuItems;
 				script.SortByPriority(script);
 			}
-			DrawDefaultInspector();
 		}/*OnInspectorGUI*/
 
 	}/*CIMenuItemsEditor*/
 
 
 	[CustomEditor(typeof(CISettingsGeneric<CIGenericRule>))]
-	public class CISettingsGengericEditor : CIMenuItemsEditor
+	public class CISettingsGenericEditor : CIMenuItemsEditor
 	{
+		protected SerializedProperty ruleList;
+
+
+		public void OnEnable()
+		{
+			ruleList = serializedObject.FindProperty("_L_rules");
+		}/*OnEnable*/
+
 		public override void OnInspectorGUI()
 		{
 			base.OnInspectorGUI();
+			EditorGUILayout.Separator();
+			EditorGUILayout.PropertyField(ruleList, new GUIContent("Filters"), true, GUILayout.MaxHeight(GUI.skin.textArea.lineHeight * 3));
 		}/*OnInspectorGUI*/
 
-	}/*CISettingsGengericEditor*/
+	}/*CISettingsGenericEditor*/
 }

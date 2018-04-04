@@ -213,7 +213,6 @@ ModelImporter:
     100414: FEMME_WORLD_C
     100416: Cercle
     100418: //RootNode
-    100420: Disque_root
     400000: FEMME_BASE_M
     400002: //RootNode
     400004: FEMME_BODY_C
@@ -424,7 +423,6 @@ ModelImporter:
     400414: FEMME_WORLD_C
     400416: Cercle
     400418: //RootNode
-    400420: Disque_root
     2100000: Tablier
     2100002: Veste_Origin_Elite
     2100004: Pantalon_Cogarette_Allure_F
@@ -483,7 +481,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -491,7 +489,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
@@ -519,7 +517,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
@@ -535,7 +533,7 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 0
@@ -545,8 +543,6 @@ ModelImporter:
 
     CustomImporter used
 
-    DefaultModelImporter
-
-    Differ from preset'
+    Default'
   assetBundleName: 
   assetBundleVariant: 

@@ -40,7 +40,7 @@ namespace CustomImporter
 
 
 	[CustomEditor(typeof(CISettingsModel))]
-	public class CISettingsModelEditor : CIMenuItemsEditor
+	public class CISettingsModelEditor : CISettingsGenericEditor
 	{
 		public override void OnInspectorGUI()
 		{

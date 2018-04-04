@@ -105,7 +105,7 @@ namespace CustomImporter
 						}
 					}
 
-					Preset preset = settings.GetPresetByName(settings_used);
+					Preset preset = settings.GetPresetByRuleLabel(settings_used);
 					if(preset != null)
 					{
 						if(_b_debug)
@@ -151,7 +151,7 @@ namespace CustomImporter
 					if(preset != null)
 					{
 						preset.ApplyTo(assetImporter);
-						assetImporter.userData = string.Format("{0}\n{1}\n{2}", assetImporter.userData, _s_prefix, preset.name);
+						assetImporter.userData = string.Format("{0}\n{1}\n{2}", assetImporter.userData, _s_prefix, settings.GetRuleLabelFromPreset(preset));
 						if(_b_debug)
 						{
 							Debug.LogFormat("Preset found : {0}", preset.name);
