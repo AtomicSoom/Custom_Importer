@@ -28,12 +28,12 @@ namespace CustomImporter
 		/// <summary>
 		/// Prefix used for userData to indicate that it uses a custom importer settings
 		/// </summary>
-		private string _s_prefix = "CustomImporter used";
+		public const string _s_prefix = "CustomImporter used";
 		/// <summary>
 		/// Text added to userData if the settings has derived from original settings
 		/// so we can keep it's value if we change the settings (or not if forced to refresh)
 		/// </summary>
-		private string _s_differing = "Differ from preset";
+		public const string _s_differing = "Differ from preset";
 
 
 		/// <summary>
@@ -101,6 +101,10 @@ namespace CustomImporter
 						if(datas[i].Equals(_s_prefix))
 						{
 							settings_used = datas[i + 1];
+							if (_b_debug)
+							{
+								Debug.LogFormat("Rule label is : {0}", settings_used);
+							}
 							break;
 						}
 					}

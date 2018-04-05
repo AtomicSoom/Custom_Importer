@@ -13,7 +13,7 @@ namespace CustomImporter
 	{
 		public string _s_visible_name = "Filter";
 		[SerializeField]
-		protected string _s_label = "Default";
+		protected string _s_label;
 		public string LABEL { get { return _s_label; } }
 
 		[SerializeField]
@@ -37,6 +37,31 @@ namespace CustomImporter
 		protected string _s_test_path = "";
 		[SerializeField]
 		protected bool _b_path_exact = true;
+
+
+		private int _i_id = 120;
+
+
+
+		public static string GetFilter (string type)
+		{
+			if (type == "CITextureRule")
+			{
+				return "t:Texture";
+			}
+			else if (type == "CIModelRule")
+			{
+				return "t:Model";
+			}
+			else if (type == "CIAudioRule")
+			{
+				return "t:AudioClip";
+			}
+			else
+			{
+				return "";
+			}
+		}/*GetFilter*/
 
 
 		public virtual bool TestCondition(string path, string name)
@@ -70,6 +95,7 @@ namespace CustomImporter
 
 			return name_test && path_test;
 		}/*TestCondition*/
+
 	}/*CIGenericRule*/
 
 
@@ -79,7 +105,7 @@ namespace CustomImporter
 	[System.Serializable]
 	public class CITextureRule : CIGenericRule
 	{
-		//TODO check how to get metadata info of the file to add filter like size
+		 //TODO check how to get metadata info of the file to add filter like size
 	}/*CITextureRule*/
 
 
@@ -89,7 +115,7 @@ namespace CustomImporter
 	[System.Serializable]
 	public class CIModelRule : CIGenericRule
 	{
-		//TODO check how to get metadata info of the file
+		 //TODO check how to get metadata info of the file
 	}/*CIModelRule*/
 
 
@@ -99,7 +125,7 @@ namespace CustomImporter
 	[System.Serializable]
 	public class CIAudioRule : CIGenericRule
 	{
-		//TODO check how to get metadata info of the file
+		 //TODO check how to get metadata info of the file
 	}/*CIAudioRule*/
 
 
@@ -112,39 +138,80 @@ namespace CustomImporter
 		private GUIContent guiContentPathTest = new GUIContent("Path to test");
 		private GUIContent guiContentIsExact = new GUIContent("Is exact");
 
+		private SerializedProperty _Preset;
+		private SerializedProperty _s_label;
+		private SerializedProperty _i_priority;
+		private SerializedProperty _s_visible_name;
+		private SerializedProperty _b_filter_name;
+		private SerializedProperty _s_test_name;
+		private SerializedProperty _b_name_exact;
+		private SerializedProperty _b_filter_path;
+		private SerializedProperty _s_test_path;
+		private SerializedProperty _b_path_exact;
+
 
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 		{
+			_Preset = property.FindPropertyRelative("_Preset");
+			_s_label = property.FindPropertyRelative("_s_label");
+			_i_priority = property.FindPropertyRelative("_i_priority");
+			_s_visible_name = property.FindPropertyRelative("_s_visible_name");
+			_b_filter_name = property.FindPropertyRelative("_b_filter_name");
+			_s_test_name = property.FindPropertyRelative("_s_test_name");
+			_b_name_exact = property.FindPropertyRelative("_b_name_exact");
+			_b_filter_path = property.FindPropertyRelative("_b_filter_path");
+			_s_test_path = property.FindPropertyRelative("_s_test_path");
+			_b_path_exact = property.FindPropertyRelative("_b_path_exact");
+
 			GUILayout.Box("", GUILayout.Height(2), GUILayout.ExpandWidth(true));
+			//TODO FieldInfo;
 			bool rule_open = EditorGUILayout.PropertyField(property, label);
 			if (rule_open)
 			{
 				EditorGUILayout.Separator();
 				int indent = EditorGUI.indentLevel;
 				EditorGUI.indentLevel++;
-				EditorGUILayout.PropertyField(property.FindPropertyRelative("_s_label"), guiContentFilterLabel);
-				EditorGUILayout.PropertyField(property.FindPropertyRelative("_i_priority"), guiContentPriority);
-				property.FindPropertyRelative("_s_visible_name").stringValue = string.Format("Filter {0} | Priority {1}", property.FindPropertyRelative("_s_label").stringValue, property.FindPropertyRelative("_i_priority").intValue);
+				EditorGUILayout.PropertyField(_s_label, guiContentFilterLabel);
+				EditorGUILayout.PropertyField(_i_priority, guiContentPriority);
+				_s_visible_name.stringValue = string.Format("Filter {0} | Priority {1}", _s_label.stringValue, _i_priority.intValue);
 
-				EditorGUILayout.PropertyField(property.FindPropertyRelative("_Preset"));
+				EditorGUILayout.PropertyField(_Preset);
 
-				property.FindPropertyRelative("_b_filter_name").boolValue = EditorGUILayout.ToggleLeft(" Filter by name", property.FindPropertyRelative("_b_filter_name").boolValue);
-				if (property.FindPropertyRelative("_b_filter_name").boolValue)
+				_b_filter_name.boolValue = EditorGUILayout.ToggleLeft(" Filter by name", _b_filter_name.boolValue);
+				if (_b_filter_name.boolValue)
 				{
 					EditorGUI.indentLevel += 2;
-					EditorGUILayout.PropertyField(property.FindPropertyRelative("_s_test_name"), guiContentNameTest);
-					EditorGUILayout.PropertyField(property.FindPropertyRelative("_b_name_exact"), guiContentIsExact);
+					EditorGUILayout.PropertyField(_s_test_name, guiContentNameTest);
+					EditorGUILayout.PropertyField(_b_name_exact, guiContentIsExact);
 					EditorGUI.indentLevel -= 2;
 				}
 
-				property.FindPropertyRelative("_b_filter_path").boolValue = EditorGUILayout.ToggleLeft(" Filter by path", property.FindPropertyRelative("_b_filter_path").boolValue);
-				if(property.FindPropertyRelative("_b_filter_path").boolValue)
+				_b_filter_path.boolValue = EditorGUILayout.ToggleLeft(" Filter by path", _b_filter_path.boolValue);
+				if(_b_filter_path.boolValue)
 				{
 					EditorGUI.indentLevel += 2;
-					EditorGUILayout.PropertyField(property.FindPropertyRelative("_s_test_path"), guiContentPathTest);
-					EditorGUILayout.PropertyField(property.FindPropertyRelative("_b_name_exact"), guiContentIsExact);
+					EditorGUILayout.PropertyField(_s_test_path, guiContentPathTest);
+					EditorGUILayout.PropertyField(_b_path_exact, guiContentIsExact);
 					EditorGUI.indentLevel -= 2;
 				}
+				EditorGUILayout.Separator();
+				EditorGUILayout.Separator();
+
+				EditorGUILayout.LabelField("For assets using this filter : ", GUILayout.ExpandWidth(true));
+
+				EditorGUILayout.BeginHorizontal();
+				EditorGUILayout.Separator();
+				if(GUILayout.Button("Reapply for unmodified assets"))
+				{
+					CISettingsGeneric<CIGenericRule>.ApplyNewPresets(false, CIGenericRule.GetFilter(property.type), _s_label.stringValue, _Preset.objectReferenceValue as Preset);
+				}
+				EditorGUILayout.Separator();
+				if(GUILayout.Button("Reapply for all assets"))
+				{
+					CISettingsGeneric<CIGenericRule>.ApplyNewPresets(true, CIGenericRule.GetFilter(property.type), _s_label.stringValue, _Preset.objectReferenceValue as Preset);
+				}
+				EditorGUILayout.Separator();
+				EditorGUILayout.EndHorizontal();
 
 				EditorGUI.indentLevel = indent;
 				EditorGUILayout.Separator();

@@ -60,6 +60,8 @@ namespace CustomImporter
 			Separator();
 
 			EditorGUILayout.PropertyField(debugEnabled, guiContentDebug);
+
+			serializedObject.ApplyModifiedProperties();
 		}/*OnInspectorGUI*/
 
 

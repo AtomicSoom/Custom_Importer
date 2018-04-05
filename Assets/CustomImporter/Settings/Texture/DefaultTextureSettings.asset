@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _L_rules:
   - _s_visible_name: Filter Sprite | Priority 3
-    _s_name: Sprite
+    _s_label: Sprite
     _Preset: {fileID: 2655988077585873504, guid: 2485721f836ef4e4bb387010e1728315,
       type: 2}
     _i_priority: 3
@@ -23,8 +23,9 @@ MonoBehaviour:
     _b_filter_path: 1
     _s_test_path: Sprites
     _b_path_exact: 0
+    _i_id: 120
   - _s_visible_name: Filter NormalMap | Priority 2
-    _s_name: NormalMap
+    _s_label: NormalMap
     _Preset: {fileID: 2655988077585873504, guid: c43c1a076966dae489f4e9ce2717f65e,
       type: 2}
     _i_priority: 2
@@ -34,8 +35,9 @@ MonoBehaviour:
     _b_filter_path: 0
     _s_test_path: 
     _b_path_exact: 0
+    _i_id: 120
   - _s_visible_name: Filter Default | Priority 0
-    _s_name: Default
+    _s_label: Default
     _Preset: {fileID: 2655988077585873504, guid: 9baef84642a90ad4ea3e869f72058cc1,
       type: 2}
     _i_priority: 0
@@ -45,4 +47,4 @@ MonoBehaviour:
     _b_filter_path: 1
     _s_test_path: Textures
     _b_path_exact: 0
-  _L_importers: []
+    _i_id: 120

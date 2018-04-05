@@ -10,6 +10,7 @@ namespace CustomImporter
 	/// ScriptableObject to use as parent for importer settings
 	/// This enables the generic class to have contextual menu items functions
 	/// </summary>
+	[System.Serializable]
 	public abstract class CIMenuItems : ScriptableObject
 	{
 		/// <summary>
@@ -34,7 +35,7 @@ namespace CustomImporter
 		/// the boolean "force" is used to force apply to all linked assets
 		/// </summary>
 		/// <param name="force"></param>
-		public abstract void ApplyNewPresets(bool force);
+		//public abstract void ApplyNewPresets(bool force, string filter, string rule);
 
 	}/*CIMenuItems*/
 
@@ -68,7 +69,7 @@ namespace CustomImporter
 		/// <returns></returns>
 		public virtual Preset GetPresetByRuleLabel(string label)
 		{
-			CIGenericRule importer = _L_rules.Find(x => x.LABEL == name);
+			CIGenericRule importer = _L_rules.Find(x => x.LABEL == label);
 			return importer?.PRESET;
 		}/*GetPresetByRuleLabel*/
 
@@ -125,9 +126,21 @@ namespace CustomImporter
 		}/*SortByPriority*/
 
 
-		public override void ApplyNewPresets(bool force)
+		public static void ApplyNewPresets (bool force, string filter, string rule, Preset preset)
 		{
-			//TODO
+			string[] assets = AssetDatabase.FindAssets(filter);
+			for (int i = 0; i < assets.Length; ++i)
+			{
+				AssetImporter importer = AssetImporter.GetAtPath(AssetDatabase.GUIDToAssetPath(assets[i]));
+				if (importer && !string.IsNullOrEmpty(importer.userData) && importer.userData.Contains(rule) && (force || !importer.userData.Contains(CustomImporter._s_differing)))
+				{
+					Debug.LogFormat("Asset reimported : {0}", importer.assetPath);
+					string userdatas = importer.userData;
+					preset.ApplyTo(importer);
+					importer.userData = userdatas;
+					importer.SaveAndReimport();
+				}
+			}
 		}/*ApplyNewPresets*/
 
 	}/*CISettingsGeneric*/
@@ -156,7 +169,6 @@ namespace CustomImporter
 	{
 		protected SerializedProperty ruleList;
 
-
 		public void OnEnable()
 		{
 			ruleList = serializedObject.FindProperty("_L_rules");
@@ -167,6 +179,8 @@ namespace CustomImporter
 			base.OnInspectorGUI();
 			EditorGUILayout.Separator();
 			EditorGUILayout.PropertyField(ruleList, new GUIContent("Filters"), true, GUILayout.MaxHeight(GUI.skin.textArea.lineHeight * 3));
+
+			serializedObject.ApplyModifiedProperties();
 		}/*OnInspectorGUI*/
 
 	}/*CISettingsGenericEditor*/
