@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: af66f71fdaa95254bb57b26c52c454b4
+guid: da21e0367802c3c49929875904a96950
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}
@@ -125,14 +125,8 @@ TextureImporter:
   spritePackingTag: 
   userData: '
 
-    CustomImporter
-
-    AlbedoTexture_Default
-
-    Customized_after_import
-
     CustomImporter used
 
-    Default'
+    1'
   assetBundleName: 
   assetBundleVariant: 

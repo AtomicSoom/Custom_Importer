@@ -469,13 +469,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_UserData
-    value: '
-
-      CustomImporter
-
-      AlbedoTexture_Default
-
-      Customized_after_import'
+    value: 
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_AssetBundleName

@@ -12,7 +12,7 @@ namespace CustomImporter
 	{
 		//ScriptableObjects used to have a link between the assetpostprocessor
 		//and the differents importer settings
-		private CILinks _CILinks;
+		private static CILinks _CILinks;
 
 		//Active importers settings, if null importer will be set to Unity default
 		private CISettingsTexture _CISettings_texture;
@@ -103,13 +103,13 @@ namespace CustomImporter
 							settings_used = datas[i + 1];
 							if (_b_debug)
 							{
-								Debug.LogFormat("Rule label is : {0}", settings_used);
+								Debug.LogFormat("Rule ID is : {0}", settings_used);
 							}
 							break;
 						}
 					}
 
-					Preset preset = settings.GetPresetByRuleLabel(settings_used);
+					Preset preset = settings.GetPresetByRuleID(settings_used);
 					if(preset != null)
 					{
 						if(_b_debug)
@@ -119,23 +119,24 @@ namespace CustomImporter
 
 						//if different, set customized_after_import
 						//else remove customized_after_import if necessary
-						Preset dummy = new Preset(assetImporter);
-						if(dummy.Equals(preset) && isDiffering)
-						{
-							if(_b_debug)
-							{
-								Debug.Log("Removing customized flag");
-							}
-							assetImporter.userData.Replace(string.Format("\n{0}", _s_differing), "");
-						}
-						else if(!isDiffering)
-						{
-							if(_b_debug)
-							{
-								Debug.Log("Adding customized flag");
-							}
-							assetImporter.userData = string.Format("{0}\n{1}", assetImporter.userData, _s_differing);
-						}
+						//TODO find a proper way to compare, this doesn't work
+						//Preset dummy = new Preset(assetImporter);
+						//if(dummy.Equals(preset) && isDiffering)
+						//{
+						//	if(_b_debug)
+						//	{
+						//		Debug.Log("Removing customized flag");
+						//	}
+						//	assetImporter.userData.Replace(string.Format("\n{0}", _s_differing), "");
+						//}
+						//else if(!isDiffering)
+						//{
+						//	if(_b_debug)
+						//	{
+						//		Debug.Log("Adding customized flag");
+						//	}
+						//	assetImporter.userData = string.Format("{0}\n{1}", assetImporter.userData, _s_differing);
+						//}
 						//let the settings apply
 					}
 					else if(_b_debug)
@@ -155,7 +156,7 @@ namespace CustomImporter
 					if(preset != null)
 					{
 						preset.ApplyTo(assetImporter);
-						assetImporter.userData = string.Format("{0}\n{1}\n{2}", assetImporter.userData, _s_prefix, settings.GetRuleLabelFromPreset(preset));
+						assetImporter.userData = string.Format("{0}\n{1}\n{2}", assetImporter.userData, _s_prefix, settings.GetRuleIDstringFromPreset(preset));
 						if(_b_debug)
 						{
 							Debug.LogFormat("Preset found : {0}", preset.name);
@@ -163,22 +164,42 @@ namespace CustomImporter
 					}
 					else if(_b_debug)
 					{
-						Debug.Log("No preset found, don't uses CustomImporter");
+						Debug.Log("No preset found, doesn't use CustomImporter");
 					}
 					//We didn't found anything, let Unity deal with it.
 				}
+				//Debug.Log("userData : " + assetImporter.userData);
 			}
 		}
 
 
 		private void SetLinks()
 		{
-			_CILinks = AssetDatabase.LoadAssetAtPath<CILinks>("Assets/CustomImporter/CustomImporterLinks.asset");
+			_CILinks = GetLinks();
 			_CISettings_texture = _CILinks._CISettings_texture;
 			_CISettings_model = _CILinks._CISettings_model;
 			_CISettings_audio = _CILinks._CISettings_audio;
 			_b_debug = _CILinks._b_debug;
 		}/*SetLinks*/
+
+
+		/// <summary>
+		/// Get CILinks, create it if it doesn't exists
+		/// </summary>
+		/// <returns></returns>
+		public static CILinks GetLinks ()
+		{
+			if (_CILinks == null)
+			{
+				_CILinks = AssetDatabase.LoadAssetAtPath<CILinks>("Assets/CustomImporter/CustomImporterLinks.asset");
+				if (_CILinks == null)
+				{
+					AssetDatabase.CreateAsset(ScriptableObject.CreateInstance<CILinks>(), "Assets/CustomImporter/CustomImporterLinks.asset");
+					_CILinks = AssetDatabase.LoadAssetAtPath<CILinks>("Assets/CustomImporter/CustomImporterLinks.asset");
+				}
+			}
+			return _CILinks;
+		}/*GetLinks*/
 
 	}/*CustomImporter*/
 }
