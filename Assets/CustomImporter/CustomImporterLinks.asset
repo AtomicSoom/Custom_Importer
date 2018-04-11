@@ -11,8 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd9280ea9099e0f4283db6f77714cb99, type: 3}
   m_Name: CustomImporterLinks
   m_EditorClassIdentifier: 
-  _CISettings_texture: {fileID: 0}
-  _CISettings_model: {fileID: 0}
-  _CISettings_audio: {fileID: 0}
+  _CISettings_texture: {fileID: 11400000, guid: 5c7ff60ef5b7f0041be31b5507ad8a1e,
+    type: 2}
+  _CISettings_model: {fileID: 11400000, guid: 2df51ff2a26bb9d49a9bda04bbc2a9cf, type: 2}
+  _CISettings_audio: {fileID: 11400000, guid: 27fc2ac1f92b4af43bc5bd115e88e265, type: 2}
   _b_debug: 0
-  _l_id: 13
+  _l_id: 5

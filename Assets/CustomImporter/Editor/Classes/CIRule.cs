@@ -37,10 +37,25 @@ namespace CustomImporter
 		protected string _s_test_path;
 		[SerializeField]
 		protected bool _b_path_exact;
-		
+
 		[SerializeField]
 		private long _l_id;
-		public long ID { get { return _l_id; } set { _l_id = value; } }
+		public long ID { get { return _l_id; } }
+
+		[SerializeField]
+		private bool _b_enabled;
+		public bool ENABLED { get { return _b_enabled; } }
+
+
+		public CIGenericRule()
+		{
+			_b_enabled = true;
+			if (CustomImporter.IsLinks())
+			{
+				_l_id = CustomImporter.GetLinks().GetID();
+				_s_visible_name = string.Format("Filter {0} | Priority : {1} | ID : {2}", LABEL, PRIORITY, ID);
+			}
+		}/*Set*/
 
 
 		public static string GetFilter (string type)
@@ -141,7 +156,7 @@ namespace CustomImporter
 		private SerializedProperty _Preset;
 		private SerializedProperty _s_label;
 		private SerializedProperty _i_priority;
-		//private SerializedProperty _s_visible_name;
+		private SerializedProperty _s_visible_name;
 		private SerializedProperty _b_filter_name;
 		private SerializedProperty _s_test_name;
 		private SerializedProperty _b_name_exact;
@@ -156,7 +171,7 @@ namespace CustomImporter
 			_Preset = property.FindPropertyRelative("_Preset");
 			_s_label = property.FindPropertyRelative("_s_label");
 			_i_priority = property.FindPropertyRelative("_i_priority");
-			//_s_visible_name = property.FindPropertyRelative("_s_visible_name");
+			_s_visible_name = property.FindPropertyRelative("_s_visible_name");
 			_b_filter_name = property.FindPropertyRelative("_b_filter_name");
 			_s_test_name = property.FindPropertyRelative("_s_test_name");
 			_b_name_exact = property.FindPropertyRelative("_b_name_exact");
@@ -165,7 +180,7 @@ namespace CustomImporter
 			_b_path_exact = property.FindPropertyRelative("_b_path_exact");
 			_l_id = property.FindPropertyRelative("_l_id");
 
-			GUILayout.Box("", GUILayout.Height(2), GUILayout.ExpandWidth(true));
+			EditorGUILayout.BeginVertical();
 			bool rule_open = EditorGUILayout.PropertyField(property, label);
 			if (rule_open)
 			{
@@ -174,7 +189,7 @@ namespace CustomImporter
 				EditorGUI.indentLevel++;
 				EditorGUILayout.PropertyField(_s_label, guiContentFilterLabel);
 				EditorGUILayout.PropertyField(_i_priority, guiContentPriority);
-				//_s_visible_name.stringValue = string.Format("Filter {0} | Priority : {1} | ID : {2}", _s_label.stringValue, _i_priority.intValue, _l_id.longValue);
+				_s_visible_name.stringValue = string.Format("Filter {0} | Priority : {1} | ID : {2}", _s_label.stringValue, _i_priority.intValue, _l_id.longValue);
 
 				EditorGUILayout.PropertyField(_Preset);
 
@@ -202,22 +217,15 @@ namespace CustomImporter
 
 				EditorGUILayout.BeginHorizontal();
 				EditorGUILayout.Separator();
-				if(GUILayout.Button("TODO : Reapply for unmodified assets"))
-				{
-					//CIMenuItems.ApplyNewPresets(false, CIGenericRule.GetFilter(property.type), _l_id.longValue.ToString(), _Preset.objectReferenceValue as Preset);
-				}
-				EditorGUILayout.Separator();
-				if(GUILayout.Button("Reapply for all assets"))
+				//if(GUILayout.Button("TODO : Reapply for unmodified assets"))
+				//{
+				//	CIMenuItems.ApplyNewPresets(false, CIGenericRule.GetFilter(property.type), _l_id.longValue.ToString(), _Preset.objectReferenceValue as Preset);
+				//}
+				//EditorGUILayout.Separator();
+				if(GUILayout.Button("Reapply preset"))
 				{
 					CISettingsParent.ApplyNewPresets(true, CIGenericRule.GetFilter(property.type), _l_id.longValue.ToString(), _Preset.objectReferenceValue as Preset);
 				}
-				EditorGUILayout.Separator();
-				EditorGUILayout.EndHorizontal();
-
-				EditorGUILayout.Separator();
-				EditorGUILayout.Separator();
-
-				EditorGUILayout.BeginHorizontal();
 				EditorGUILayout.Separator();
 				if(GUILayout.Button("Reset rule (reimport assets as new)"))
 				{
@@ -230,6 +238,7 @@ namespace CustomImporter
 				EditorGUILayout.Separator();
 				EditorGUILayout.Separator();
 			}
+			EditorGUILayout.EndVertical();
 		}/*OnGUI*/
 
 	}/*CIGenericRuleDrawer*/

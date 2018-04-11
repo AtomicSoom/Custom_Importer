@@ -201,5 +201,11 @@ namespace CustomImporter
 			return _CILinks;
 		}/*GetLinks*/
 
+
+		public static bool IsLinks ()
+		{
+			return _CILinks;
+		}
+
 	}/*CustomImporter*/
 }

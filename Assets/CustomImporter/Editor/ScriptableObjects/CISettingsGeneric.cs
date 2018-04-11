@@ -21,6 +21,28 @@ namespace CustomImporter
 
 
 		/// <summary>
+		/// abstract function to add a new rule via mother class context
+		/// </summary>
+		/// <param name="mother"></param>
+		public abstract void AddRule(CISettingsParent mother);
+
+
+		/// <summary>
+		/// abstract function to clear all rules via mother class context
+		/// </summary>
+		/// <param name="mother"></param>
+		public abstract void ClearRules(CISettingsParent mother);
+
+
+		/// <summary>
+		/// abstract function to delete a rule at "index" via mother class context
+		/// </summary>
+		/// <param name="mother"></param>
+		/// <param name="rule"></param>
+		public abstract void DeleteRule(CISettingsParent mother, int index);
+
+
+		/// <summary>
 		/// Function to reapply the preset to the assets linked to the rule,
 		/// forcing allows to apply for all assets, non forcing applies only to unmodified assets
 		/// </summary>
@@ -83,10 +105,6 @@ namespace CustomImporter
 		public List<T> RULES { get { return _L_rules; } }
 
 		public CILinks _CILinks;
-		
-		private List<long> _Ll_ids = new List<long>();
-
-		private bool _b_enabled = false;
 
 
 		/// <summary>
@@ -163,52 +181,48 @@ namespace CustomImporter
 				return y.PRIORITY - x.PRIORITY;
 			});
 		}/*SortByPriority*/
-		
 
 
 		/// <summary>
-		/// OnValidate checks if there is a new element in the rule list
-		/// and apply an unique ID to it
+		/// Add a new rule to the list, adding null because the object is recreated anyway via serialization
 		/// </summary>
-		public void OnValidate ()
+		/// <param name="mother"></param>
+		public override void AddRule (CISettingsParent mother)
 		{
-			if (_b_enabled)
-			{
-				if (_Ll_ids.Count < _L_rules.Count)
-				{
-					for(int i = _Ll_ids.Count; i < _L_rules.Count; ++i)
-					{
-						if(_Ll_ids.Contains(_L_rules[i].ID) || _L_rules[i].ID == 0)
-						{
-							_L_rules[i].ID = _CILinks.GetID();
-							_Ll_ids.Add(_L_rules[i].ID);
-						}
-						else
-						{
-							_Ll_ids.Add(_L_rules[i].ID);
-						}
-					}
-				}
-				else if (_Ll_ids.Count > _L_rules.Count)
-				{
-					_Ll_ids.Clear();
-					for(int i = 0; i < _L_rules.Count; ++i)
-					{
-						_Ll_ids.Add(_L_rules[i].ID);
-					}
-				}
-
-				for(int i = 0; i < _L_rules.Count; ++i)
-				{
-					_L_rules[i]._s_visible_name = string.Format("Filter {0} | Priority : {1} | ID : {2}", _L_rules[i].LABEL, _L_rules[i].PRIORITY, _L_rules[i].ID);
-				}
-			}
-		}/*OnValidate*/
+			CISettingsGeneric<T> settings = mother as CISettingsGeneric<T>;
+			settings._L_rules.Add(null);
+		}/*AddRule*/
 
 
+		/// <summary>
+		/// Deleting all rules from the lists
+		/// </summary>
+		/// <param name="mother"></param>
+		public override void ClearRules(CISettingsParent mother)
+		{
+			CISettingsGeneric<T> settings = mother as CISettingsGeneric<T>;
+			settings._L_rules.Clear();
+		}/*ClearRules*/
+
+
+		/// <summary>
+		/// Delete a specific rule based on it's index
+		/// </summary>
+		/// <param name="mother"></param>
+		/// <param name="index"></param>
+		public override void DeleteRule(CISettingsParent mother, int index)
+		{
+			CISettingsGeneric<T> settings = mother as CISettingsGeneric<T>;
+			settings._L_rules.RemoveAt(index);
+		}/*DeleteRule*/
+
+
+		/// <summary>
+		/// OnEnable we get the CILinks reference,
+		/// this is just to make sure it's allocated when opening the inspector
+		/// </summary>
 		private void OnEnable()
 		{
-			_b_enabled = true;
 			_CILinks = CustomImporter.GetLinks();
 		}/*OnEnable*/
 
@@ -223,12 +237,31 @@ namespace CustomImporter
 	{
 		public override void OnInspectorGUI()
 		{
+			EditorGUILayout.BeginHorizontal();
+			EditorGUILayout.Separator();
 			if (GUILayout.Button("Sort by priority"))
 			{
 				CISettingsParent script = target as CISettingsParent;
 				script.SortByPriority(script);
-				//serializedObject.UpdateIfRequiredOrScript();
 			}
+
+			EditorGUILayout.Separator();
+			if(GUILayout.Button("Add new rule"))
+			{
+				CISettingsParent script = target as CISettingsParent;
+				script.AddRule(script);
+			}
+
+			EditorGUILayout.Separator();
+			if(GUILayout.Button("Clear Rules"))
+			{
+				CISettingsParent script = target as CISettingsParent;
+				script.ClearRules(script);
+			}
+			EditorGUILayout.Separator();
+			EditorGUILayout.EndHorizontal();
+			serializedObject.ApplyModifiedProperties();
+			serializedObject.UpdateIfRequiredOrScript();
 		}/*OnInspectorGUI*/
 
 	}/*CIMenuItemsEditor*/
@@ -238,6 +271,7 @@ namespace CustomImporter
 	public class CISettingsGenericEditor : CIMenuItemsEditor
 	{
 		protected SerializedProperty ruleList;
+		protected CISettingsGeneric<CIGenericRule> script;
 
 		public void OnEnable()
 		{
@@ -248,18 +282,28 @@ namespace CustomImporter
 		{
 			base.OnInspectorGUI();
 			EditorGUILayout.Separator();
-			EditorGUILayout.PropertyField(ruleList, new GUIContent("Filters"), true, GUILayout.MaxHeight(GUI.skin.textArea.lineHeight * 3));
-			//TODO replace auto child show by a custom one, would allow to use buttons to add and remove elements with proper control over serialization
-			//if (ruleList.isExpanded)
-			//{
-			//	EditorGUI.indentLevel += 1;
-			//	for(int i = 0; i < ruleList.arraySize; i++)
-			//	{
-			//		EditorGUILayout.PropertyField(ruleList.GetArrayElementAtIndex(i));
-			//	}
-			//	EditorGUI.indentLevel -= 1;
-			//}
-			//DrawDefaultInspector();
+			EditorGUILayout.PropertyField(ruleList, new GUIContent("Filters"), false, GUILayout.MaxHeight(GUI.skin.textField.lineHeight));
+			EditorGUILayout.Separator();
+			int indent = EditorGUI.indentLevel;
+			if(ruleList.isExpanded)
+			{
+				EditorGUI.indentLevel = indent + 1;
+				for(int i = 0; i < ruleList.arraySize; i++)
+				{
+
+					GUILayout.Box("", GUILayout.Height(2), GUILayout.ExpandWidth(true));
+					EditorGUILayout.BeginHorizontal();
+					EditorGUILayout.PropertyField(ruleList.GetArrayElementAtIndex(i), GUILayout.Height(0f), GUILayout.Width(-10f));
+					if(GUILayout.Button("X", GUILayout.ExpandWidth(false)))
+					{
+						CISettingsParent script = target as CISettingsParent;
+						script.DeleteRule(script, i);
+					}
+					EditorGUILayout.EndHorizontal();
+				}
+				EditorGUI.indentLevel = indent;
+			}
+			
 			serializedObject.ApplyModifiedProperties();
 			serializedObject.UpdateIfRequiredOrScript();
 		}/*OnInspectorGUI*/

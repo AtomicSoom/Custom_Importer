@@ -46,12 +46,13 @@ Find UnityPackages [in releases section!](https://github.com/AtomicSoom/Custom_I
 	
 	
 	
-* Each assets saves it's conditions, they keep their links to the preset and keeps track if it differs from it or not.
-	This is not used at the time except that an already imported assets won't be forced to the preset on each reimport.
+* Each assets saves their links to the rule applied at import.
+	You can change and reapply a preset via the button "Reapply preset",
+		it'll reimport with a new preset each asset using the rule you clicked.
+	You can reset the assets for a rule,
+		it will reimport the associated assets as new (reapplying valid rules).
 	
 	
 ## TODO :
 
 	* Add tests based on specific types (like texture size)
-	* Add functions to reapply presets to all assets, choosing to force for all or only assets unmodified from preset.
-	* Make a better interface
