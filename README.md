@@ -32,8 +32,8 @@ Find UnityPackages [in releases section!](https://github.com/AtomicSoom/Custom_I
 	
 	To set a rule you add an element to the list,
 	set the associated preset and priority,
-	set the wanted tests to ON and fill in the text to check.
-	If multiple tests are selected they are combine by "AND".
+	set the wanted filter (name and/or path) to ON and fill in the text to check.
+	If multiple filters are selected they are combine by "AND".
 
 
 
