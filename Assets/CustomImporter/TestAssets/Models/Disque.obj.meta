@@ -211,6 +211,7 @@ ModelImporter:
     100410: FEMME_Veste_Allure_M
     100412: FEMME_Veste_Origin_Elite_M
     100414: FEMME_WORLD_C
+    100416: Cercle
     400000: FEMME_BASE_M
     400002: //RootNode
     400004: FEMME_BODY_C
@@ -419,6 +420,7 @@ ModelImporter:
     400410: FEMME_Veste_Allure_M
     400412: FEMME_Veste_Origin_Elite_M
     400414: FEMME_WORLD_C
+    400416: Cercle
     2100000: Tablier
     2100002: Veste_Origin_Elite
     2100004: Pantalon_Cogarette_Allure_F
@@ -428,6 +430,9 @@ ModelImporter:
     2100012: FEMME_PlaceHolder_Veste
     2100014: Woman
     2100016: woman_hair
+    2100018: CercleMat
+    2300000: Cercle
+    3300000: Cercle
     4300000: FEMME_Tablier_M
     4300002: FEMME_Tablier_Veste_Origin_Elite_M
     4300004: FEMME_Pantalon_Allure_BASE_M
@@ -439,6 +444,7 @@ ModelImporter:
     4300016: FEMME_PlaceHolder_Veste_M
     4300018: FEMME_BASE_M
     4300020: FEMME_Hair_M
+    4300022: Cercle
     7400000: CINEMA_4D_Main
     9500000: //RootNode
     9500002: //RootNode
